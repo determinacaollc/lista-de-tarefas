@@ -109,4 +109,113 @@
 </head>
 <body>
   <div class="caixa">
-    <h1>Lista de
+    <h1>Lista de Tarefas v2</h1>
+
+    <div class="formulario">
+      <input id="tarefaInput" type="text" placeholder="Escreve uma tarefa">
+      <button id="adicionar">Adicionar</button>
+    </div>
+
+    <p id="mensagem"></p>
+    <p id="contador">Tarefas pendentes: 0</p>
+
+    <ul id="lista"></ul>
+
+    <button id="limparTudo" class="limpar">Limpar tudo</button>
+  </div>
+
+  <script>
+    const tarefaInput = document.getElementById("tarefaInput");
+    const adicionar = document.getElementById("adicionar");
+    const lista = document.getElementById("lista");
+    const mensagem = document.getElementById("mensagem");
+    const contador = document.getElementById("contador");
+    const limparTudo = document.getElementById("limparTudo");
+
+    let tarefas = JSON.parse(localStorage.getItem("tarefas")) || [];
+
+    function guardarTarefas() {
+      localStorage.setItem("tarefas", JSON.stringify(tarefas));
+    }
+
+    function mostrarTarefas() {
+      lista.innerHTML = "";
+
+      tarefas.forEach(function (tarefa, index) {
+        const item = document.createElement("li");
+
+        const texto = document.createElement("span");
+        texto.textContent = tarefa.texto;
+        texto.classList.add("texto-tarefa");
+
+        if (tarefa.concluida) {
+          texto.classList.add("concluida");
+        }
+
+        texto.addEventListener("click", function () {
+          tarefas[index].concluida = !tarefas[index].concluida;
+          guardarTarefas();
+          mostrarTarefas();
+        });
+
+        const botaoApagar = document.createElement("button");
+        botaoApagar.textContent = "Apagar";
+        botaoApagar.classList.add("apagar");
+
+        botaoApagar.addEventListener("click", function () {
+          tarefas.splice(index, 1);
+          guardarTarefas();
+          mostrarTarefas();
+        });
+
+        item.appendChild(texto);
+        item.appendChild(botaoApagar);
+        lista.appendChild(item);
+      });
+
+      const pendentes = tarefas.filter(function (tarefa) {
+        return tarefa.concluida === false;
+      });
+
+      contador.textContent = "Tarefas pendentes: " + pendentes.length;
+    }
+
+    function adicionarTarefa() {
+      const textoTarefa = tarefaInput.value.trim();
+
+      if (textoTarefa === "") {
+        mensagem.textContent = "Escreve uma tarefa antes de adicionar.";
+        return;
+      }
+
+      mensagem.textContent = "";
+
+      tarefas.push({
+        texto: textoTarefa,
+        concluida: false
+      });
+
+      guardarTarefas();
+      mostrarTarefas();
+
+      tarefaInput.value = "";
+    }
+
+    adicionar.addEventListener("click", adicionarTarefa);
+
+    tarefaInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        adicionarTarefa();
+      }
+    });
+
+    limparTudo.addEventListener("click", function () {
+      tarefas = [];
+      guardarTarefas();
+      mostrarTarefas();
+    });
+
+    mostrarTarefas();
+  </script>
+</body>
+</html>
