@@ -2,13 +2,12 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <title>Lista de Tarefas</title>
+  <title>Lista de Tarefas v2</title>
 
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f2f4f8;
-      text-align: center;
       margin: 0;
       padding: 0;
     }
@@ -16,27 +15,30 @@
     .caixa {
       background-color: white;
       width: 90%;
-      max-width: 450px;
-      margin: 100px auto;
+      max-width: 500px;
+      margin: 80px auto;
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     }
 
     h1 {
+      text-align: center;
       color: #222;
     }
 
     .formulario {
       display: flex;
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     input {
       flex: 1;
       padding: 12px;
       font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
     }
 
     button {
@@ -47,6 +49,22 @@
       cursor: pointer;
       background-color: #0d6efd;
       color: white;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    #mensagem {
+      color: #dc3545;
+      text-align: center;
+      min-height: 20px;
+    }
+
+    #contador {
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
     }
 
     ul {
@@ -63,6 +81,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
+    }
+
+    .texto-tarefa {
+      flex: 1;
+      cursor: pointer;
+    }
+
+    .concluida {
+      text-decoration: line-through;
+      color: #888;
     }
 
     .apagar {
@@ -71,58 +100,13 @@
       font-size: 14px;
     }
 
-    #mensagem {
-      color: #dc3545;
-      margin-top: 10px;
+    .limpar {
+      width: 100%;
+      margin-top: 15px;
+      background-color: #6c757d;
     }
   </style>
 </head>
 <body>
   <div class="caixa">
-    <h1>Lista de Tarefas</h1>
-
-    <div class="formulario">
-      <input id="tarefaInput" type="text" placeholder="Escreve uma tarefa">
-      <button id="adicionar">Adicionar</button>
-    </div>
-
-    <ul id="lista"></ul>
-
-    <p id="mensagem"></p>
-  </div>
-
-  <script>
-    const tarefaInput = document.getElementById("tarefaInput");
-    const adicionar = document.getElementById("adicionar");
-    const lista = document.getElementById("lista");
-    const mensagem = document.getElementById("mensagem");
-
-    adicionar.addEventListener("click", function () {
-      const textoTarefa = tarefaInput.value.trim();
-
-      if (textoTarefa === "") {
-        mensagem.textContent = "Escreve uma tarefa antes de adicionar.";
-        return;
-      }
-
-      mensagem.textContent = "";
-
-      const item = document.createElement("li");
-      item.textContent = textoTarefa;
-
-      const botaoApagar = document.createElement("button");
-      botaoApagar.textContent = "Apagar";
-      botaoApagar.classList.add("apagar");
-
-      botaoApagar.addEventListener("click", function () {
-        item.remove();
-      });
-
-      item.appendChild(botaoApagar);
-      lista.appendChild(item);
-
-      tarefaInput.value = "";
-    });
-  </script>
-</body>
-</html>
+    <h1>Lista de
