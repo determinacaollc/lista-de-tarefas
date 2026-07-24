@@ -51,3 +51,78 @@
 
     ul {
       list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      background-color: #f8f9fa;
+      margin-bottom: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .apagar {
+      background-color: #dc3545;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+
+    #mensagem {
+      color: #dc3545;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="caixa">
+    <h1>Lista de Tarefas</h1>
+
+    <div class="formulario">
+      <input id="tarefaInput" type="text" placeholder="Escreve uma tarefa">
+      <button id="adicionar">Adicionar</button>
+    </div>
+
+    <ul id="lista"></ul>
+
+    <p id="mensagem"></p>
+  </div>
+
+  <script>
+    const tarefaInput = document.getElementById("tarefaInput");
+    const adicionar = document.getElementById("adicionar");
+    const lista = document.getElementById("lista");
+    const mensagem = document.getElementById("mensagem");
+
+    adicionar.addEventListener("click", function () {
+      const textoTarefa = tarefaInput.value.trim();
+
+      if (textoTarefa === "") {
+        mensagem.textContent = "Escreve uma tarefa antes de adicionar.";
+        return;
+      }
+
+      mensagem.textContent = "";
+
+      const item = document.createElement("li");
+      item.textContent = textoTarefa;
+
+      const botaoApagar = document.createElement("button");
+      botaoApagar.textContent = "Apagar";
+      botaoApagar.classList.add("apagar");
+
+      botaoApagar.addEventListener("click", function () {
+        item.remove();
+      });
+
+      item.appendChild(botaoApagar);
+      lista.appendChild(item);
+
+      tarefaInput.value = "";
+    });
+  </script>
+</body>
+</html>
